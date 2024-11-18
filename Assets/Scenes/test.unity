@@ -228,6 +228,35 @@ Transform:
   m_Children: []
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1 &866446806 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 3312899958337024284, guid: b4168f7a5c73ee94b83966a36ea33428, type: 3}
+  m_PrefabInstance: {fileID: 3186641149826900338}
+  m_PrefabAsset: {fileID: 0}
+--- !u!114 &866446811
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 866446806}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 375573ce4c9fa0347be0e502ca47b6da, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  initialSpeed: 2
+  decelerationRate: 5
+  swingThreshold: 1
+  amplitude: 0.5
+  frequency: 0.1
+  swingCooldown: 0.5
+  headTransform: {fileID: 866446812}
+--- !u!4 &866446812 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: 4049164775146222765, guid: b4168f7a5c73ee94b83966a36ea33428, type: 3}
+  m_PrefabInstance: {fileID: 3186641149826900338}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1 &1144644274
 GameObject:
   m_ObjectHideFlags: 0
@@ -240,7 +269,6 @@ GameObject:
   - component: {fileID: 1144644277}
   - component: {fileID: 1144644276}
   - component: {fileID: 1144644275}
-  - component: {fileID: 1144644279}
   m_Layer: 0
   m_Name: Cube
   m_TagString: Untagged
@@ -334,21 +362,6 @@ Transform:
   m_Children: []
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &1144644279
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1144644274}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 3e7cc2dba36745142ae40bc3df6285d5, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  portName: COM3
-  baudRate: 9600
-  readline: 
 --- !u!1 &1684300345
 GameObject:
   m_ObjectHideFlags: 0
@@ -695,17 +708,25 @@ PrefabInstance:
       value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 8200329875869833865, guid: b4168f7a5c73ee94b83966a36ea33428, type: 3}
+      propertyPath: m_Enabled
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8200329875869833865, guid: b4168f7a5c73ee94b83966a36ea33428, type: 3}
       propertyPath: serialHandler
       value: 
-      objectReference: {fileID: 1144644279}
+      objectReference: {fileID: 0}
     - target: {fileID: 8962558506852670492, guid: b4168f7a5c73ee94b83966a36ea33428, type: 3}
       propertyPath: m_Name
       value: OVRPlayerController
       objectReference: {fileID: 0}
-    m_RemovedComponents: []
+    m_RemovedComponents:
+    - {fileID: 8200329875869833865, guid: b4168f7a5c73ee94b83966a36ea33428, type: 3}
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
-    m_AddedComponents: []
+    m_AddedComponents:
+    - targetCorrespondingSourceObject: {fileID: 3312899958337024284, guid: b4168f7a5c73ee94b83966a36ea33428, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 866446811}
   m_SourcePrefab: {fileID: 100100000, guid: b4168f7a5c73ee94b83966a36ea33428, type: 3}
 --- !u!1660057539 &9223372036854775807
 SceneRoots:
