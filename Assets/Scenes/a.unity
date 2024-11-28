@@ -11597,7 +11597,8 @@ PrefabInstance:
       propertyPath: m_Enabled
       value: 0
       objectReference: {fileID: 0}
-    m_RemovedComponents: []
+    m_RemovedComponents:
+    - {fileID: 6370866124491067623, guid: 1591ab879072a974090d4fe5a38aff29, type: 3}
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
     m_AddedComponents:
@@ -11810,17 +11811,6 @@ PrefabInstance:
     m_AddedGameObjects: []
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: f70fa4911611b5749ae34d006f4b93f7, type: 3}
---- !u!114 &1067812305 stripped
-MonoBehaviour:
-  m_CorrespondingSourceObject: {fileID: 6370866124491067623, guid: 1591ab879072a974090d4fe5a38aff29, type: 3}
-  m_PrefabInstance: {fileID: 894843977}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 278340794}
-  m_Enabled: 0
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 3e7cc2dba36745142ae40bc3df6285d5, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!114 &1067812310
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -12996,7 +12986,7 @@ PrefabInstance:
     - target: {fileID: 8200329875869833865, guid: b4168f7a5c73ee94b83966a36ea33428, type: 3}
       propertyPath: serialHandler
       value: 
-      objectReference: {fileID: 1067812305}
+      objectReference: {fileID: 0}
     - target: {fileID: 8200329875869833865, guid: b4168f7a5c73ee94b83966a36ea33428, type: 3}
       propertyPath: textMeshProField
       value: 

@@ -958,7 +958,6 @@ GameObject:
   - component: {fileID: 3087499383825697797}
   - component: {fileID: 3626332296499297909}
   - component: {fileID: 5828946315012663031}
-  - component: {fileID: 8200329875869833865}
   - component: {fileID: 6390649685812409016}
   m_Layer: 0
   m_Name: OVRPlayerController
@@ -1067,24 +1066,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b71d1996d67004241a3b69960856ffcb, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
---- !u!114 &8200329875869833865
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 8962558506852670492}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: e7e44365e7533450e9891a92b8cc1640, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  normalSpeed: 1
-  sprintSpeed: 3
-  rotationSpeed: 100
-  serialHandler: {fileID: 0}
-  audioSource: {fileID: 0}
-  footstepSound: {fileID: 8300000, guid: 8c2fbffd79fe8b94cb012e1bc20378c4, type: 3}
 --- !u!54 &6390649685812409016
 Rigidbody:
   m_ObjectHideFlags: 0
