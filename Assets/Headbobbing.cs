@@ -9,11 +9,12 @@ using TMPro;
 public class HeadBobbing : MonoBehaviour
 {
     [Header("General Settings")]
+    [SerializeField] public GameObject canvas; // キャンバスのGameObjectをここにアサイン
     [SerializeField] float speed = 1.0f;        // 前進速度
     [SerializeField] GameObject parent;         // OVRPlayerControllerをアサイン
 
     [Header("Head Bobbing Settings")]
-    [SerializeField] float cycle = 1.2f;        // ヘッドボビングの周期
+    [SerializeField] float cycle = 1.0f;        // ヘッドボビングの周期
     [SerializeField] float amplitude = 0.5f;    // ヘッドボビング振幅
     [SerializeField] float gap = 0.2f; //
 
@@ -50,6 +51,8 @@ public class HeadBobbing : MonoBehaviour
     private TcpClient client;
     private NetworkStream stream;
 
+    public Rigidbody rigidbody;
+
     void Start()
     {
         // Pythonサーバに接続
@@ -67,8 +70,11 @@ public class HeadBobbing : MonoBehaviour
         if (Input.GetKeyDown(KeyCode.LeftShift) || Input.GetKeyDown(KeyCode.RightShift))
         {
             isMoving = true;
-            TriggerPythonStart();
+            // TriggerPythonStart();
             StartCoroutine(AutoExplore());
+            // キャンバスをアクティブにする
+            canvas.SetActive(true);
+            Debug.Log("Canvas is now active");
         }
 
         // アーム回転処理(前進中のみ有効)
@@ -148,77 +154,93 @@ public class HeadBobbing : MonoBehaviour
             }
     }
 
-    void TriggerPythonStart()
+void SendMessageToPython(string msg)
+{
+    if (client != null && client.Connected && stream != null)
     {
-        if (client != null && client.Connected && stream != null)
-        {
-            string message = "start";
-            byte[] data = Encoding.ASCII.GetBytes(message);
-            stream.Write(data, 0, data.Length);
-            Debug.Log("Sent 'start' to Python");
-        }
-        else
-        {
-            Debug.LogWarning("Client or stream not available. Cannot send 'start' message.");
-        }
+        
+        byte[] data = Encoding.ASCII.GetBytes(msg);
+        stream.Write(data, 0, data.Length);
+        Debug.Log($"Sent {msg} to Python");
     }
+    else
+    {
+        Debug.LogWarning("Client or stream not available. Cannot send message.");
+    }
+}
 
     IEnumerator AutoExplore()
     {
         // 1. 前進区間1：ヘッドボビング＆アーム回転開始
         StartHeadAndArms();
+        SendMessageToPython("start");
         switch_text.text = "Go";
         yield return MoveForward(forwardTime1);
 
         // 2. 回転区間1：停止して回転
         StopHeadAndArms();
+        SendMessageToPython("stop");
         switch_text.text = "Stop";
         yield return RotateY(rotateTime1, rotationSpeedDegPerSec);
 
         // 3. 前進区間2：再度開始
         StartHeadAndArms();
+        SendMessageToPython("start");
         switch_text.text = "Go";
         yield return MoveForward(forwardTime2);
 
         // 4. 回転区間2：停止して逆回転
         StopHeadAndArms();
+        SendMessageToPython("stop");
         switch_text.text = "Stop";
         yield return RotateY(rotateTime2, -rotationSpeedDegPerSec);
 
         // 5. 前進区間3：開始
         StartHeadAndArms();
+        SendMessageToPython("start");
         switch_text.text = "Go";
         yield return MoveForward(forwardTime3);
 
         // 6. 回転区間3：停止して回転（元方向へ）
         StopHeadAndArms();
+        SendMessageToPython("stop");
         switch_text.text = "Stop";
         yield return RotateY(rotateTime3, -rotationSpeedDegPerSec);
         
         StartHeadAndArms();
+        SendMessageToPython("start");
         switch_text.text = "Go";
         yield return MoveForward(forwardTime4);
 
         // 6. 回転区間4：停止して回転（元方向へ）
         StopHeadAndArms();
+        SendMessageToPython("stop");
         switch_text.text = "Stop";
         yield return RotateY(rotateTime4, rotationSpeedDegPerSec);
         
         StartHeadAndArms();
+        SendMessageToPython("start");
         switch_text.text = "Go";
         yield return MoveForward(forwardTime5);
 
         switch_text.text = "Finish";
         // 必要ならここで停止処理
-        // isMoving = false;
+        isMoving = false;
     }
 
     IEnumerator MoveForward(float time)
     {
+        // 前へ進む
+        //rigidbody.velocity = -parent.transform.forward*speed;
+        //Debug.Log(-parent.transform.forward);
+        // time秒待つ
+        //yield return new WaitForSeconds(time);
+        
         float elapsed = 0f;
         while (elapsed < time)
         {
-            parent.transform.Translate(-parent.transform.forward * speed * Time.deltaTime, Space.World);
+            rigidbody.velocity = -parent.transform.forward*speed;
+            //parent.transform.Translate(-parent.transform.forward * speed * Time.deltaTime, Space.World);
             elapsed += Time.deltaTime;
             yield return null;
         }
@@ -226,6 +248,18 @@ public class HeadBobbing : MonoBehaviour
 
     IEnumerator RotateY(float time, float degPerSec)
     {
+        // 速度を0にする
+        rigidbody.velocity = Vector3.zero;
+        // 回転する
+        float elapsed = 0f;
+        while (elapsed < time){
+            parent.transform.Rotate(Vector3.up * degPerSec * Time.deltaTime, Space.World);
+            elapsed += Time.deltaTime;
+            yield return null;
+        }
+        // 秒数まつ
+        //yield return new WaitForSeconds(time);
+        /*
         float elapsed = 0f;
         while (elapsed < time)
         {
@@ -233,6 +267,7 @@ public class HeadBobbing : MonoBehaviour
             elapsed += Time.deltaTime;
             yield return null;
         }
+        */
     }
 
     void OnApplicationQuit()
